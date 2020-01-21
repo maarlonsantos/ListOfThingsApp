@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="Projeto01.View.TelaPrincipal"
+             xmlns:convert="clr-namespace:Projeto01.Converter;assembly=Projeto01">
+    <ContentPage.Resources>
+        <convert:FinalizadoConverter x:Key="cvtFinalizado"></convert:FinalizadoConverter>
+    </ContentPage.Resources>
+    <StackLayout>
+        <StackLayout Orientation="Horizontal">
+            <Entry x:Name="Tarefa" Placeholder="Digite uma nova Tarefa" Text="{Binding TarefaAtual.Nome}" FontSize="12 " HorizontalOptions="FillAndExpand"></Entry>
+            <Button Text="Salvar" Command="{Binding SalvarCommand}" HorizontalOptions="FillAndExpand"></Button>
+        </StackLayout>
+
+        <Label Text="Lista de Tarefas" HorizontalOptions="Center" FontAttributes="Bold" FontSize="24"/>
+
+        <ListView x:Name="ListTarefas" ItemsSource="{Binding Tarefas}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <ViewCell.ContextActions>
+                            <MenuItem Text="Excluir" Clicked="ExcluirTarefa" CommandParameter="{Binding .}"></MenuItem>
+                            <MenuItem Text="Editar" Clicked="EditarTarefa" CommandParameter="{Binding .}"></MenuItem>
+                        </ViewCell.ContextActions>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Text="{Binding Nome}" HorizontalOptions="StartAndExpand" VerticalOptions="Center"/>
+                            <Button Text="{Binding Finalizado, Converter={StaticResource cvtFinalizado}}" Clicked="BtnMudarSituacao" CommandParameter="{Binding .}" HorizontalOptions="End"></Button>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</ContentPage>
